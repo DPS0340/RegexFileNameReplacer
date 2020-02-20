@@ -26,13 +26,15 @@ def main():
     parser.add_argument('file_path', type=str)
     parser.add_argument('regex', type=str)
     parser.add_argument('replace_keyword', type=str)
-    parser.add_argument('--append', type=bool, default=False)
+    parser.add_argument('--append', type=bool, default=True)
     args = parser.parse_args()
     file_path = args.file_path
-    regex = args.regex
+    print(args)
+    regex = re.compile(args.regex)
     replace_keyword = args.replace_keyword
+    appendMode = args.append
     print(file_path)
-    search([file_path], regex, replace_keyword, args.append)
+    search([file_path], regex, replace_keyword, appendMode)
 
 
 if __name__ == "__main__":
