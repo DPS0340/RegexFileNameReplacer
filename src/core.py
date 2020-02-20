@@ -5,22 +5,25 @@ import os
 
 def matchRegex(filename, regex):
     result = re.search(filename, regex)
-    return result != None
+    return result
     
 def rename(filename, directory, newname):
     os.rename(f"{directory}/{filename}", f"{directory}/{newname}")
 
 
-def run(filename, directory, regex, replaceKeyword):
-    if not (filename and directory and regex and replaceKeyword):
+def run(filename, directory, regex, replace_keyword, appendMode):
+    if not (filename and directory and regex and replace_keyword):
         print("invalid arguments")
         return
     
-    isMatched = matchRegex(filename, regex)
+    result = matchRegex(filename, regex)
 
-    if isMatched:
+    if result:
         print(f"match find!\nfilename: {filename}")
-        newname = re.sub(regex, replaceKeyword, filename)
+        if appendMode == False:
+            newname = re.sub(regex, replace_keyword, filename)
+        else:
+            newname = re.sub(regex, replace_keyword, filename) % result.group(0)
         rename(filename, directory, newname)
         return True
     else:
